@@ -19,15 +19,19 @@ io.on('connection',(socket)=>{
 
 socket.on('createMsg',(msg)=>{
   console.log('CreateMsg',msg);
+  io.emit('newMsg',{
+    from:msg.from,
+    text:msg.text,
+    createdAt:new Date().getTime()
+  });
 });
-socket.emit('newMsg',{
-  from:'admin@',
-  text:'you doing alright',
-  createdAt:123
-});
 
 
-
+// socket.emit('newMsg',{
+//   from:'admin@',
+//   text:'you doing alright',
+//   createdAt:123
+// });
 
 // Email
 // socket.emit('newEmail',{
