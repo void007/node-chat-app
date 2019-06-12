@@ -9,9 +9,9 @@ var app=express();
 
 app.use(express.static(publicPath));
 
-app.get('/server',(req,res)=>{
-  res.send("Hello this express!");
-});
+// app.get('/server',(req,res)=>{
+//   res.send("Hello this express!");
+// });
 
 
 app.listen(port,()=>{
