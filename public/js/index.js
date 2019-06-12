@@ -22,8 +22,28 @@ socket.on('disconnect',function(){
 
 socket.on('newMsg',function(msg){
   console.log('newMsg',msg);
+  var li=jQuery('<li></li>');
+  li.text(`${msg.from}:${msg.text}`);
+  jQuery('#msgs').append(li);
 });
 
+// socket.emit('createMsg',{
+//   from:'Mandeep',
+//   text:'Hey',
+// },function(data){
+//   console.log('Got it',data);
+// });
+
+jQuery('#msg-form').on('submit',function(e){
+  e.preventDefault();
+
+   socket.emit('createMsg',{
+     from:'User',
+     text:jQuery('[name=msg]').val()
+   },function(){
+
+   });
+});
 
 
 // socket.on('newEmail',function(email){
