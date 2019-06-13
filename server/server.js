@@ -50,13 +50,19 @@ socket.on('join', (params, callback) => {
 
 
 socket.on('createMsg',(msg,callback)=>{
-  console.log('CreateMsg',msg);
-  io.emit('newMsg',generateMsg(msg.from,msg.text));
+  // console.log('CreateMsg',msg);
+  var user=users.getUser(socket.id);
+  if(user&&isRealString(msg.text)){
+  io.to(user.room).emit('newMsg',generateMsg(user.name,msg.text));
+}
   callback();
 });
 
 socket.on('createLocationMsg',(coords)=>{
-  io.emit('newLocationMsg',generateLocationMsg('Admin',coords.latitude,coords.longitude));
+  var user=users.getUser(socket.id);
+  if(user){
+  io.to(user.room).emit('newLocationMsg',generateLocationMsg(user.name,coords.latitude,coords.longitude));
+}
 });
 
 // socket.emit('newMsg',{
