@@ -27,6 +27,14 @@ socket.on('newMsg',function(msg){
   jQuery('#msgs').append(li);
 });
 
+socket.on('newLocationMsg',function(msg){
+  var li=jQuery('<li></li>');
+  var a=jQuery('<a target="_blank">My Current Location</a>');
+  li.text(`${msg.from}: `);
+  a.attr('href',msg.url);
+  li.append(a);
+  jQuery('#msgs').append(li);
+});
 // socket.emit('createMsg',{
 //   from:'Mandeep',
 //   text:'Hey',
@@ -44,6 +52,25 @@ jQuery('#msg-form').on('submit',function(e){
 
    });
 });
+
+var locationButton=jQuery('#send-location');
+locationButton.on('click',function(){
+  if(!navigator.geolocation){
+    return alert('geolocation not supported by your browser');
+  }
+  navigator.geolocation.getCurrentPosition(function(position){
+    // console.log(position);
+    socket.emit('createLocationMsg',{
+      latitude:position.coords.latitude,
+      longitude:position.coords.longitude
+    });
+  },function(){
+    alert('Unable to fetch location');
+  });
+});
+
+
+
 
 
 // socket.on('newEmail',function(email){
