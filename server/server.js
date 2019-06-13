@@ -26,7 +26,7 @@ socket.broadcast.emit('newMsg',generateMsg('Admin','New user joined'));
 socket.on('createMsg',(msg,callback)=>{
   console.log('CreateMsg',msg);
   io.emit('newMsg',generateMsg(msg.from,msg.text));
-  callback('This is from the server');
+  callback();
 });
 
 socket.on('createLocationMsg',(coords)=>{
